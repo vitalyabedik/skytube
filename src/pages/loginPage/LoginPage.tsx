@@ -1,5 +1,11 @@
 import React from 'react'
 
+import { LoginForm, Page } from '@/components'
+
 export const LoginPage: React.FC = () => {
-  return <div>LoginPage</div>
+  return (
+    <Page>
+      <LoginForm />
+    </Page>
+  )
 }
