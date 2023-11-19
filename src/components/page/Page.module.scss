@@ -1,7 +1,5 @@
+@import '@/styles/mixins';
+
 .root {
-  width: 100%;
-  max-width: 104rem;
-  min-height: 100%;
-  margin: 0 auto;
-  padding: 3.6rem 1.5rem 0;
+  @include container;
 }
