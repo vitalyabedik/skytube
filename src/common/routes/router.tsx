@@ -2,16 +2,25 @@ import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-rou
 
 import { Route } from '@/common'
 import { CustomHeader } from '@/components'
+import { Layout } from 'antd'
+
+import s from './AppLayout.module.scss'
 
 import { PrivateRoutes } from './PrivateRoutes'
 import { privateRoutes, publicRoutes } from './routerSettings'
 
 const AppLayout = () => {
+  const { Content, Header } = Layout
+
   return (
-    <>
-      <CustomHeader />
-      <Outlet />
-    </>
+    <Layout>
+      <Header>
+        <CustomHeader />
+      </Header>
+      <Content className={s.content}>
+        <Outlet />
+      </Content>
+    </Layout>
   )
 }
 
