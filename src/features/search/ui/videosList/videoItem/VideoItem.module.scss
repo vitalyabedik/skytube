@@ -1,0 +1,79 @@
+.gridRoot {
+  width: 100%;
+  max-width: 24.5rem;
+  margin-top: 2rem;
+}
+
+.listRoot {
+  &:first-child {
+    margin-top: 2rem;
+  }
+}
+
+.gridDescription {
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+}
+
+.listDescription {
+  width: 100%;
+  max-width: 51rem;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+}
+
+.gridTitle {
+  overflow: hidden;
+  display: -webkit-box;
+
+  max-width: 24.5rem;
+  margin-bottom: 0.8rem;
+
+  font-weight: 500;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.listTitle {
+  overflow: hidden;
+  display: -webkit-box;
+
+  max-width: 51rem;
+  margin-bottom: 0.8rem;
+
+  font-weight: 500;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.gridText {
+  overflow: hidden;
+  display: -webkit-box;
+
+  max-width: 24.5rem;
+
+  font-weight: 400;
+  color: #1717194d;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.listText {
+  overflow: hidden;
+  display: -webkit-box;
+
+  max-width: 51rem;
+
+  font-weight: 400;
+  color: #1717194d;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.viewCount {
+  color: #1717194d;
+}
