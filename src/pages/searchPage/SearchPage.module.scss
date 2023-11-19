@@ -1,0 +1,9 @@
+@import '@/styles/mixins';
+
+.searchDefaultWrapper {
+  @include flex($direction: column, $align: center, $justify: center, $gap: 4rem);
+}
+
+.searchResultWrapper {
+  @include flex($direction: column);
+}
