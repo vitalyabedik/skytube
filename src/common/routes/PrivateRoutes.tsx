@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { Route, useAppSelector } from '@/common'
-import { selectIsAuth } from '@/features/auth/authSelectors'
+import { Route } from '@/common'
 
 export const PrivateRoutes = () => {
-  const isAuth = useAppSelector(selectIsAuth)
+  const token = localStorage.getItem('token')
 
-  return isAuth ? <Outlet /> : <Navigate to={Route.Login} />
+  return token ? <Outlet /> : <Navigate to={Route.Login} />
 }

@@ -4,19 +4,21 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const loginSchema = z.object({
-  password: z.string(),
-  // .min(6, 'Use 6 characters or more for your password!')
+  email: z.string().email(),
   // .regex(/[A-Z]/, 'Password must contain at least one uppercase letter'),
-  username: z.string().min(1, 'Name is required!'),
+  login: z.string().min(1, 'Login is required!'),
+  // .min(6, 'Use 6 characters or more for your password!')
+  password: z.string(),
 })
 
 export type LoginFormValues = z.infer<typeof loginSchema>
 
-export const useLoginForm = () =>
+export const useSignUpForm = () =>
   useForm<LoginFormValues>({
     defaultValues: {
+      email: '',
+      login: '',
       password: '',
-      username: '',
     },
     resolver: zodResolver(loginSchema),
   })

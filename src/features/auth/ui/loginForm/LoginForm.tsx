@@ -1,22 +1,24 @@
-import React, { ChangeEvent, useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { LoginLogo } from '@/assets'
-import { useAppDispatch } from '@/common'
+import { Route, useAppDispatch } from '@/common'
 import { FormField } from '@/components'
-import { UserType, authThunks } from '@/features/auth/authSlice'
+import { useAddTokenMutation, useLoginMutation } from '@/features'
+import { authActions } from '@/features/auth/model/authSlice'
 import Button from 'antd/lib/button'
 import Card from 'antd/lib/card'
 import Flex from 'antd/lib/flex'
 import Input from 'antd/lib/input'
-import Typography from 'antd/lib/typography'
+import Text from 'antd/lib/typography/Text'
+import Title from 'antd/lib/typography/Title'
 
 import s from './LoginForm.module.scss'
 
 import { useLoginForm } from './useLoginForm'
 
 export const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [login, { data }] = useLoginMutation()
 
   const {
     control,
@@ -26,37 +28,28 @@ export const LoginForm: React.FC = () => {
 
   const dispatch = useAppDispatch()
 
-  const usernameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.currentTarget.value)
+  const onSubmit = (values: any) => {
+    login(values)
   }
 
-  const passwordChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.currentTarget.value)
-  }
-
-  const onSubmit = (values: UserType) => {
-    console.log(values)
-    dispatch(authThunks.login(values))
+  if (data && 'accessToken' in data) {
+    localStorage.setItem('token', data.accessToken)
+    dispatch(authActions.setAuth({ isAuth: true }))
   }
 
   return (
     <Flex align={'center'} className={s.root} justify={'center'}>
       <Card className={s.formCard}>
-        <Flex align={'center'} className={s.loginItemsWrapper} justify={'center'} vertical>
-          <LoginLogo />
-          <Typography.Title level={3}>Вход</Typography.Title>
+        <Flex align={'center'} justify={'center'} vertical>
+          <LoginLogo className={s.loginLogo} />
+          <Title className={s.loginTitle} level={3}>
+            Вход
+          </Title>
           <form className={s.loginForm} onSubmit={handleSubmit(onSubmit)}>
             <Flex align={'center'} gap={'middle'} justify={'space-between'} vertical>
-              <FormField control={control} errors={errors} label={'Логин'} name={'username'}>
+              <FormField control={control} errors={errors} label={'Логин'} name={'login'}>
                 {field => (
-                  <Input
-                    onChange={usernameChangeHandler}
-                    value={username}
-                    {...field}
-                    allowClear
-                    id={'username'}
-                    placeholder={'Введите логин'}
-                  />
+                  <Input {...field} allowClear id={'login'} placeholder={'Введите логин'} />
                 )}
               </FormField>
 
@@ -64,8 +57,6 @@ export const LoginForm: React.FC = () => {
                 {field => (
                   <Input.Password
                     className={s.formElement}
-                    onChange={passwordChangeHandler}
-                    value={password}
                     {...field}
                     allowClear
                     autoComplete={'password'}
@@ -80,6 +71,12 @@ export const LoginForm: React.FC = () => {
               </Button>
             </Flex>
           </form>
+          <Text className={s.infoText} type={'secondary'}>
+            Нет аккаунта?
+          </Text>
+          <Button type={'link'}>
+            <Link to={Route.SignUp}>Зарегистрироваться</Link>
+          </Button>
         </Flex>
       </Card>
     </Flex>

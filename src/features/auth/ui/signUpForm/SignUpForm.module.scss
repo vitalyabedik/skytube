@@ -1,0 +1,27 @@
+.root {
+  min-height: 100vh;
+
+  .signUpTitle {
+    margin-top: 3.2rem;
+  }
+
+  .formCard {
+    width: 100%;
+    max-width: 51rem;
+  }
+
+  .loginForm {
+    width: 100%;
+    max-width: 334px;
+    margin-top: 2rem;
+  }
+
+  .signInButton {
+    margin-top: 1rem;
+    padding: 0 3rem;
+  }
+
+  .infoText {
+    margin-top: 1rem;
+  }
+}

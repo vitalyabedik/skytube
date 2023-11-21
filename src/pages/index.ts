@@ -1,3 +1,4 @@
+export * from './signUpPage'
 export * from './loginPage'
 export * from './searchPage'
 export * from './favouritesPage'

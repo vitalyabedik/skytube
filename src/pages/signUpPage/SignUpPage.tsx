@@ -1,21 +1,20 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { Route, useAppSelector } from '@/common'
+import { Route } from '@/common'
 import { Page } from '@/components'
-import { LoginForm, selectIsAuth } from '@/features'
+import { SignUpForm } from '@/features'
 
-export const LoginPage: React.FC = () => {
-  const isAuth = useAppSelector(selectIsAuth)
+export const SignUpPage: React.FC = () => {
   const token = localStorage.getItem('token')
 
-  if (isAuth || token) {
+  if (token) {
     return <Navigate replace to={Route.Main} />
   }
 
   return (
     <Page>
-      <LoginForm />
+      <SignUpForm />
     </Page>
   )
 }
