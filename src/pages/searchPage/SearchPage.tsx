@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import { Page } from '@/components'
-import { SearchDefault, SearchResult, useAddTokenMutation } from '@/features'
+import { LinearProgressBar, Page } from '@/components'
+import { SearchDefault, SearchResult, useAddTokenMutation, useGetVideosQuery } from '@/features'
 import clsx from 'clsx'
 
 import s from './SearchPage.module.scss'
@@ -13,6 +13,7 @@ export const SearchPage: React.FC = () => {
     setSearch(text)
   }
 
+  const { data, isLoading } = useGetVideosQuery(search, { skip: !search })
   const [addToken] = useAddTokenMutation()
 
   useEffect(() => {
@@ -25,10 +26,14 @@ export const SearchPage: React.FC = () => {
 
   const searchWrapperClasses = clsx(search ? s.searchResultWrapper : s.searchDefaultWrapper)
 
+  if (isLoading) {
+    return <LinearProgressBar />
+  }
+
   return (
     <Page className={searchWrapperClasses}>
-      {search ? (
-        <SearchResult search={search} />
+      {data ? (
+        <SearchResult data={data} search={search} />
       ) : (
         <SearchDefault onChangeSearch={onChangeSearch} />
       )}
