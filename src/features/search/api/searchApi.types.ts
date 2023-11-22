@@ -11,10 +11,12 @@ export type PageInfoType = {
   resultsPerPage: number
   totalResults: number
 }
+
 export type VideosIdType = {
   kind: string
   videoId: string
 }
+
 export type ImageType = {
   height: number
   url: string
@@ -26,6 +28,7 @@ export type VideoThumbnailsType = {
   high: ImageType
   medium: ImageType
 }
+
 export type VideoType = {
   channelId: string
   channelTitle: string
@@ -36,6 +39,7 @@ export type VideoType = {
   thumbnails: VideoThumbnailsType
   title: string
 }
+
 export type VideosItemType = {
   etag: string
   id: VideosIdType

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { useGetVideosQuery } from '@/features'
 import AppstoreOutlined from '@ant-design/icons/AppstoreOutlined'
 import BarsOutlined from '@ant-design/icons/BarsOutlined'
 import Flex from 'antd/lib/flex'
@@ -14,12 +15,15 @@ import { VideosList } from '../videosList'
 
 export type VisibleType = 'grid' | 'list'
 
-export const SearchResult: React.FC = () => {
+type Props = {
+  search: string
+}
+
+export const SearchResult: React.FC<Props> = ({ search }) => {
   const [isActive, setIsActive] = useState(false)
   const [visibleMode, setVisibleMode] = useState<VisibleType>('grid')
 
-  const searchResult = 'чем кормить кота'
-  const searchResultCount = 7230
+  const { data } = useGetVideosQuery(search, { skip: !search })
 
   const gridIconClasses = clsx(s.icon, !isActive && s.active)
   const listIconClasses = clsx(s.icon, isActive && s.active)
@@ -34,24 +38,32 @@ export const SearchResult: React.FC = () => {
   return (
     <>
       <Title level={2}>Поиск видео</Title>
-      <SearchPanel className={s.searchPanel} />
-      <Flex align={'center'} justify={'space-between'}>
-        <Flex align={'center'} gap={15}>
-          <Title level={3}>
-            <span className={s.titleText}>Видео по запросу </span>
-            {`«${searchResult}»`}
-          </Title>
-          <Text className={s.countText}>{searchResultCount}</Text>
-        </Flex>
-        <Flex align={'center'} gap={15}>
-          <BarsOutlined className={listIconClasses} onClick={() => onChangeModeHandler('list')} />
-          <AppstoreOutlined
-            className={gridIconClasses}
-            onClick={() => onChangeModeHandler('grid')}
-          />
-        </Flex>
-      </Flex>
-      <VideosList visibleMode={visibleMode} />
+      <SearchPanel className={s.searchPanel} search={search} />
+
+      {data && (
+        <>
+          <Flex align={'center'} justify={'space-between'}>
+            <Flex align={'center'} gap={15}>
+              <Title level={3}>
+                <span className={s.titleText}>Видео по запросу </span>
+                {`«${search}»`}
+              </Title>
+              <Text className={s.countText}>{data?.pageInfo?.totalResults}</Text>
+            </Flex>
+            <Flex align={'center'} gap={15}>
+              <BarsOutlined
+                className={listIconClasses}
+                onClick={() => onChangeModeHandler('list')}
+              />
+              <AppstoreOutlined
+                className={gridIconClasses}
+                onClick={() => onChangeModeHandler('grid')}
+              />
+            </Flex>
+          </Flex>
+          <VideosList videos={data.items} visibleMode={visibleMode} />
+        </>
+      )}
     </>
   )
 }
