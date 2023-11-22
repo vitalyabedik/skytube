@@ -1,4 +1,18 @@
-.text {
-  font-size: 1.6rem;
-  line-height: 2rem;
+.item {
+  cursor: pointer;
+
+  .text {
+    width: 100%;
+    font-size: 1.6rem;
+    line-height: 2rem;
+  }
+
+  .buttonWrapper {
+    width: 100%;
+  }
+
+  &:hover {
+    background: #f1f1f1;
+    background-blend-mode: multiply;
+  }
 }
