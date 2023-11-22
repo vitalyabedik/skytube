@@ -1,14 +1,14 @@
-import { authSlice } from '@/features/auth/authSlice'
+import { baseApi } from '@/common'
+import { authSlice } from '@/features'
 import { configureStore } from '@reduxjs/toolkit'
-import { AnyAction } from 'redux'
-import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 
 export const store = configureStore({
-  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
   reducer: {
-    auth: authSlice,
+    [authSlice.name]: authSlice.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
 })
 
 export type AppRootStateType = ReturnType<typeof store.getState>
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>
+export type AppDispatch = typeof store.dispatch
