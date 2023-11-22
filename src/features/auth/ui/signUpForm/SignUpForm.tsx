@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { LoginLogo } from '@/assets'
 import { Route } from '@/common'
 import { FormField } from '@/components'
-import { useSignUpMutation } from '@/features'
+import { SignUpBodyType } from '@/features'
 import Button from 'antd/lib/button'
 import Card from 'antd/lib/card'
 import Flex from 'antd/lib/flex'
@@ -16,18 +16,16 @@ import s from './SignUpForm.module.scss'
 
 import { useSignUpForm } from './useSignUpForm'
 
-export const SignUpForm: React.FC = () => {
-  const [signUp] = useSignUpMutation()
+type Props = {
+  onSubmit: (loginData: SignUpBodyType) => void
+}
 
+export const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useSignUpForm()
-
-  const onSubmit = (values: any) => {
-    signUp(values)
-  }
 
   return (
     <Flex align={'center'} className={s.root} justify={'center'}>

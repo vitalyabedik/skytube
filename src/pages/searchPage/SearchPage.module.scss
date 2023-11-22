@@ -1,7 +1,9 @@
 @import '@/styles/mixins';
 
 .searchDefaultWrapper {
-  @include flex($direction: column, $align: center, $justify: center, $gap: 4rem);
+  @include flex($direction: column, $align: center, $gap: 3rem);
+
+  padding-top: 15rem;
 }
 
 .searchResultWrapper {

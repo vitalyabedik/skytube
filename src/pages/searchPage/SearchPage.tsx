@@ -26,17 +26,11 @@ export const SearchPage: React.FC = () => {
 
   const searchWrapperClasses = clsx(search ? s.searchResultWrapper : s.searchDefaultWrapper)
 
-  if (isLoading) {
-    return <LinearProgressBar />
-  }
-
   return (
     <Page className={searchWrapperClasses}>
-      {data ? (
-        <SearchResult data={data} search={search} />
-      ) : (
-        <SearchDefault onChangeSearch={onChangeSearch} />
-      )}
+      {isLoading && <LinearProgressBar />}
+      {data && <SearchResult data={data} search={search} />}
+      {!isLoading && !data && <SearchDefault onChangeSearch={onChangeSearch} />}
     </Page>
   )
 }

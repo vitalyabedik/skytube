@@ -47,7 +47,9 @@ export const CustomHeader: React.FC = () => {
             theme={'light'}
           />
         </Flex>
-        <Button onClick={logoutHandler}>Выйти</Button>
+        <Button onClick={logoutHandler} type={'link'}>
+          Выйти
+        </Button>
       </Flex>
     </Page>
   )

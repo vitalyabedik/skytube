@@ -26,12 +26,9 @@ export const LoginPage: React.FC = () => {
     dispatch(authActions.setAuth({ isAuth: true }))
   }
 
-  if (isLoading) {
-    return <LinearProgressBar />
-  }
-
   return (
     <Page>
+      {isLoading && <LinearProgressBar />}
       <LoginForm onSubmit={loginHandler} />
     </Page>
   )
