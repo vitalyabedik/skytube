@@ -2,10 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { LoginLogo } from '@/assets'
-import { Route, useAppDispatch } from '@/common'
+import { Route } from '@/common'
 import { FormField } from '@/components'
-import { useAddTokenMutation, useLoginMutation } from '@/features'
-import { authActions } from '@/features/auth/model/authSlice'
+import { LoginBodyType } from '@/features'
 import Button from 'antd/lib/button'
 import Card from 'antd/lib/card'
 import Flex from 'antd/lib/flex'
@@ -17,25 +16,16 @@ import s from './LoginForm.module.scss'
 
 import { useLoginForm } from './useLoginForm'
 
-export const LoginForm: React.FC = () => {
-  const [login, { data }] = useLoginMutation()
+type Props = {
+  onSubmit: (loginData: LoginBodyType) => void
+}
 
+export const LoginForm: React.FC<Props> = ({ onSubmit }) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useLoginForm()
-
-  const dispatch = useAppDispatch()
-
-  const onSubmit = (values: any) => {
-    login(values)
-  }
-
-  if (data && 'accessToken' in data) {
-    localStorage.setItem('token', data.accessToken)
-    dispatch(authActions.setAuth({ isAuth: true }))
-  }
 
   return (
     <Flex align={'center'} className={s.root} justify={'center'}>
