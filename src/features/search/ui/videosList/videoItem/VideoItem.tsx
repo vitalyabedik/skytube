@@ -1,6 +1,7 @@
 import React from 'react'
+import YouTube from 'react-youtube'
 
-import { VideoType, VisibleType } from '@/features'
+import { VideosItemType, VisibleType } from '@/features'
 import Flex from 'antd/lib/flex'
 import Image from 'antd/lib/image'
 import Text from 'antd/lib/typography/Text'
@@ -9,7 +10,7 @@ import { clsx } from 'clsx'
 import s from './VideoItem.module.scss'
 
 type Props = {
-  video: VideoType
+  video: VideosItemType
   visibleMode: VisibleType
 }
 
@@ -24,14 +25,30 @@ export const VideoItem: React.FC<Props> = ({ video, visibleMode }: Props) => {
     viewCount: s.viewCount,
   }
 
+  const opts = {
+    height: '500',
+    playerVars: {
+      autoplay: 1,
+    },
+    width: '800',
+  }
+
   return (
     <Flex className={classNames.root} gap={8} vertical={isGrid}>
-      <Image src={video.image} width={isGrid ? 245 : 157} />
+      <Image
+        height={isGrid ? 138 : 88}
+        preview={{
+          imageRender: () => <YouTube opts={opts} videoId={video?.id?.videoId} />,
+          toolbarRender: () => null,
+        }}
+        src={video?.snippet?.thumbnails?.high?.url}
+        width={isGrid ? 245 : 157}
+      />
       <Flex className={classNames.description} vertical>
-        <Text className={classNames.title}>{video.title}</Text>
-        <div className={classNames.description}>
-          <Text className={classNames.text}>{video.text}</Text>
-          <span className={s.viewCount}>{video.viewCount} тыс. просмотров</span>
+        <Text className={classNames.title}>{video.snippet?.title}</Text>
+        <div className={classNames?.description}>
+          <Text className={classNames.text}>{video.snippet?.description}</Text>
+          <span className={s.viewCount}>{123} тыс. просмотров</span>
         </div>
       </Flex>
     </Flex>
