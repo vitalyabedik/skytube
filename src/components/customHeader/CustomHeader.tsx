@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import HeaderLogo from '@/assets/images/logo/HeaderLogo'
-import { Route } from '@/common'
+import { Route, useAppDispatch } from '@/common'
 import { Page } from '@/components'
+import { authActions } from '@/features'
 import { Menu } from 'antd'
 import Button from 'antd/lib/button'
 import Flex from 'antd/lib/flex'
@@ -11,10 +12,19 @@ import Flex from 'antd/lib/flex'
 import s from './CustomHeader.module.scss'
 
 export const CustomHeader: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
   const menuItems = [
     { id: 1, path: Route.Search, title: 'Поиск' },
     { id: 2, path: Route.Favorites, title: 'Избранное' },
   ]
+
+  const logoutHandler = () => {
+    localStorage.removeItem('token')
+    dispatch(authActions.setAuth({ isAuth: false }))
+    navigate(Route.Login)
+  }
 
   return (
     <Page>
@@ -37,7 +47,7 @@ export const CustomHeader: React.FC = () => {
             theme={'light'}
           />
         </Flex>
-        <Button>Выйти</Button>
+        <Button onClick={logoutHandler}>Выйти</Button>
       </Flex>
     </Page>
   )
