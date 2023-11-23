@@ -11,9 +11,7 @@ export const Preloader: React.FC = forwardRef<ElementRef<'div'>, ComponentPropsW
 
     return (
       <div className={preloaderClasses} ref={ref} {...restProps}>
-        <Spin size={'large'} tip={'Loading'}>
-          <div />
-        </Spin>
+        <Spin size={'large'} />
       </div>
     )
   }
