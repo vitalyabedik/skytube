@@ -1,20 +1,23 @@
 export type VideosResponseType = {
-  etag: string
   items: VideosItemType[]
-  kind: string
-  nextPageToken: string
   pageInfo: PageInfoType
-  regionCode: string
+}
+
+export type VideosItemType = {
+  id: string
+  snippet: VideoType
+  statistics: StatisticsType
 }
 
 export type PageInfoType = {
+  pagination: PaginationType
   resultsPerPage: number
   totalResults: number
 }
 
-export type VideosIdType = {
-  kind: string
-  videoId: string
+export type PaginationType = {
+  nextPageToken: string
+  prevPageToken: null | string
 }
 
 export type ImageType = {
@@ -31,18 +34,13 @@ export type VideoThumbnailsType = {
 
 export type VideoType = {
   channelId: string
-  channelTitle: string
   description: string
-  liveBroadcastContent: string
-  publishTime: string
-  publishedAt: string
-  thumbnails: VideoThumbnailsType
   title: string
 }
 
-export type VideosItemType = {
-  etag: string
-  id: VideosIdType
-  kind: string
-  snippet: VideoType
+export type StatisticsType = {
+  commentCount: string
+  favouriteCount: string
+  likeCount: string
+  viewCount: string
 }

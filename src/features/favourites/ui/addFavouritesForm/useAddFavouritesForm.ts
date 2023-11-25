@@ -4,21 +4,22 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const addFavouritesSchema = z.object({
-  maxCount: z.string(),
+  maxCount: z.number(),
   request: z.string(),
-  sortType: z.string(),
+  sortBy: z.string(),
   title: z.string().min(1),
 })
 
-export type LoginFormValues = z.infer<typeof addFavouritesSchema>
+export type FavouritesFormValues = z.infer<typeof addFavouritesSchema>
+export type DefaultFavouritesFormValues = Pick<FavouritesFormValues, 'request' | 'sortBy'>
 
-export const useAddFavouritesForm = () =>
-  useForm<LoginFormValues>({
+export const useAddFavouritesForm = (defaultValues: DefaultFavouritesFormValues) =>
+  useForm<FavouritesFormValues>({
     defaultValues: {
-      maxCount: '',
-      request: '',
-      sortType: '',
-      title: '',
+      maxCount: 0,
+      request: defaultValues.request,
+      sortBy: defaultValues.sortBy,
+      title: defaultValues.request,
     },
     resolver: zodResolver(addFavouritesSchema),
   })

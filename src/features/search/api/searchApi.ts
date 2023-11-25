@@ -4,10 +4,10 @@ import { VideosResponseType } from '@/features'
 export const searchApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getVideos: builder.query<VideosResponseType, string>({
-      providesTags: ['Videos'],
+      providesTags: ['Search'],
       query: query => ({
         method: 'GET',
-        url: `query/getVideos/${query}`,
+        url: `query/search/${query}`,
       }),
     }),
   }),
