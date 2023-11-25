@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useAppSelector } from '@/common'
+import { selectFavourites } from '@/features'
 import { List } from 'antd'
 import Button from 'antd/lib/button'
 import Flex from 'antd/lib/flex'
@@ -13,13 +15,7 @@ export type FavouriteType = {
 }
 
 export const FavouritesList: React.FC = () => {
-  const favouritesItems: FavouriteType[] = [
-    { id: 1, title: 'Cat' },
-    { id: 2, title: 'Dog' },
-    { id: 3, title: 'Milk' },
-    { id: 4, title: 'Bread' },
-    { id: 5, title: 'Water' },
-  ]
+  const favouritesItems = useAppSelector(selectFavourites)
 
   const onClickHandler = (title: string) => {
     console.log(title)
@@ -36,7 +32,7 @@ export const FavouritesList: React.FC = () => {
   return (
     <List
       dataSource={favouritesItems}
-      renderItem={item => (
+      renderItem={(item: FavouriteType) => (
         <List.Item className={s.item}>
           <Flex align={'center'} className={s.buttonWrapper} justify={'space-between'}>
             <Text className={s.text} onClick={() => onClickHandler(item.title)} strong>

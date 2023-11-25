@@ -1,5 +1,6 @@
 import { baseApi } from '@/common'
 import { authSlice } from '@/features'
+import { favouritesSlice } from '@/features/favourites/model/favouritesSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
@@ -7,6 +8,7 @@ export const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
     [baseApi.reducerPath]: baseApi.reducer,
+    [favouritesSlice.name]: favouritesSlice.reducer,
   },
 })
 
