@@ -15,9 +15,14 @@ export const VideosList: React.FC<Props> = ({ videos, visibleMode }) => {
   const isList = visibleMode === 'list'
 
   return (
-    <Flex gap={isGrid ? 20 : 32} vertical={isList} wrap={isGrid ? 'wrap' : 'nowrap'}>
+    <Flex
+      gap={isGrid ? 20 : 32}
+      justify={isGrid ? 'center' : ''}
+      vertical={isList}
+      wrap={isGrid ? 'wrap' : 'nowrap'}
+    >
       {videos?.map(video => {
-        return <VideoItem key={video.id.videoId} video={video} visibleMode={visibleMode} />
+        return <VideoItem key={video.id} video={video} visibleMode={visibleMode} />
       })}
     </Flex>
   )

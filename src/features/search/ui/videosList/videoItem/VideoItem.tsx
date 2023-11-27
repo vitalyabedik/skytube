@@ -38,17 +38,21 @@ export const VideoItem: React.FC<Props> = ({ video, visibleMode }: Props) => {
       <Image
         height={isGrid ? 138 : 88}
         preview={{
-          imageRender: () => <YouTube opts={opts} videoId={video?.id?.videoId} />,
+          imageRender: () => <YouTube opts={opts} videoId={video?.id} />,
           toolbarRender: () => null,
         }}
         src={video?.snippet?.thumbnails?.high?.url}
         width={isGrid ? 245 : 157}
       />
       <Flex className={classNames.description} vertical>
-        <Text className={classNames.title}>{video.snippet?.title}</Text>
+        <Text className={classNames.title}>{video?.snippet?.title}</Text>
         <div className={classNames?.description}>
-          <Text className={classNames.text}>{video.snippet?.description}</Text>
-          <span className={s.viewCount}>{123} тыс. просмотров</span>
+          <Text className={classNames.text}>
+            {video?.snippet?.description
+              ? video?.snippet?.description
+              : 'Video without description'}
+          </Text>
+          <span className={s.viewCount}>{video?.statistics?.viewCount} тыс. просмотров</span>
         </div>
       </Flex>
     </Flex>
