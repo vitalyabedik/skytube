@@ -1,2 +1,2 @@
 export * from './favouritesList'
-export * from './addFavouritesForm'
+export * from './favouritesForm'
