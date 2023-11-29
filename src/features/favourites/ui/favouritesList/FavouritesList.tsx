@@ -1,55 +1,81 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '@/common'
-import { selectFavourites } from '@/features'
-import { List } from 'antd'
+import { Route, useAppDispatch } from '@/common'
+import { CustomModal } from '@/components'
+import {
+  FavouriteType,
+  FavouritesForm,
+  searchActions,
+  useGetFavouritesQuery,
+  useRemoveFavouriteMutation,
+} from '@/features'
 import Button from 'antd/lib/button'
 import Flex from 'antd/lib/flex'
+import List from 'antd/lib/list'
 import Text from 'antd/lib/typography/Text'
 
 import s from './FavouritesList.module.scss'
 
-export type FavouriteType = {
-  id: number
-  title: string
-}
-
 export const FavouritesList: React.FC = () => {
-  const favouritesItems = useAppSelector(selectFavourites)
+  const [open, setOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<FavouriteType | null>(null)
 
-  const onClickHandler = (title: string) => {
-    console.log(title)
+  const { data } = useGetFavouritesQuery()
+  const [removeFavourite] = useRemoveFavouriteMutation()
+
+  const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
+
+  const onClickHandler = (search: string) => {
+    dispatch(searchActions.setSearch({ search }))
+    navigate(Route.Search)
   }
 
-  const onChangeHandler = (id: number) => {
-    console.log(id)
+  const onClickEdit = (id: string) => {
+    const selectedItem = data?.find(item => item.id === id)
+
+    setSelectedItem(selectedItem ?? null)
+    setOpen(true)
   }
 
-  const onDeleteHandler = (id: number) => {
-    console.log(id)
+  const onClickDelete = (id: string) => {
+    removeFavourite(id)
   }
 
   return (
-    <List
-      dataSource={favouritesItems}
-      renderItem={(item: FavouriteType) => (
-        <List.Item className={s.item}>
-          <Flex align={'center'} className={s.buttonWrapper} justify={'space-between'}>
-            <Text className={s.text} onClick={() => onClickHandler(item.title)} strong>
-              {item.title}
-            </Text>
-            <Flex>
-              <Button onClick={() => onChangeHandler(item.id)} type={'link'}>
-                Изменить
-              </Button>
-              <Button danger onClick={() => onDeleteHandler(item.id)} type={'link'}>
-                Удалить
-              </Button>
-            </Flex>
-          </Flex>
-        </List.Item>
-      )}
-      size={'large'}
-    />
+    <>
+      <List
+        dataSource={data as FavouriteType[]}
+        renderItem={(item: FavouriteType) => (
+          <>
+            <List.Item className={s.item}>
+              <Flex align={'center'} className={s.buttonWrapper} justify={'space-between'}>
+                <Text className={s.text} onClick={() => onClickHandler(item?.query?.text)} strong>
+                  {item?.query?.title}
+                </Text>
+                <Flex>
+                  <Button onClick={() => onClickEdit(item?.id)} type={'link'}>
+                    Изменить
+                  </Button>
+                  <Button danger onClick={() => onClickDelete(item?.id)} type={'link'}>
+                    Удалить
+                  </Button>
+                </Flex>
+              </Flex>
+            </List.Item>
+          </>
+        )}
+        size={'large'}
+      />
+      <CustomModal open={open} setOpen={setOpen} title={'Изменить запрос'}>
+        <FavouritesForm
+          favouriteItem={selectedItem as FavouriteType}
+          formVariant={'edit'}
+          setOpen={setOpen}
+        />
+      </CustomModal>
+    </>
   )
 }

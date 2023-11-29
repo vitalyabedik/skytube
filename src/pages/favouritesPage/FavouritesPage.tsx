@@ -1,14 +1,19 @@
 import React from 'react'
 
-import { Page } from '@/components'
-import { FavouritesList } from '@/features'
+import { LinearProgressBar, Page } from '@/components'
+import { FavouritesList, useGetFavouritesQuery } from '@/features'
 import Title from 'antd/lib/typography/Title'
 
 export const FavouritesPage: React.FC = () => {
+  const { data, isLoading } = useGetFavouritesQuery()
+
   return (
-    <Page>
-      <Title level={2}>Избранное</Title>
-      <FavouritesList />
-    </Page>
+    <>
+      {isLoading && <LinearProgressBar />}
+      <Page>
+        <Title level={2}>Избранное</Title>
+        {data && <FavouritesList />}
+      </Page>
+    </>
   )
 }
