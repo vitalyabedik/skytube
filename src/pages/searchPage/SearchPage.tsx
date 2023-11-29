@@ -1,36 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
-import { LinearProgressBar, Page } from '@/components'
-import { SearchDefault, SearchResult, useAddTokenMutation, useGetVideosQuery } from '@/features'
+import { useAppDispatch, useAppSelector } from '@/common'
+import { CustomPagination, LinearProgressBar, Page } from '@/components'
+import {
+  SearchDefault,
+  SearchResult,
+  searchActions,
+  selectSearch,
+  useAddTokenMutation,
+  useGetVideosQuery,
+} from '@/features'
 import clsx from 'clsx'
 
 import s from './SearchPage.module.scss'
 
 export const SearchPage: React.FC = () => {
-  const [search, setSearch] = useState('')
+  const search = useAppSelector(selectSearch)
+  const token = localStorage.getItem('token')
 
-  const onChangeSearch = (text: string) => {
-    setSearch(text)
-  }
+  const dispatch = useAppDispatch()
 
-  const { data, isLoading } = useGetVideosQuery(search, { skip: !search })
+  const { data, isFetching, isLoading } = useGetVideosQuery({ query: search }, { skip: !search })
   const [addToken] = useAddTokenMutation()
 
-  useEffect(() => {
-    addToken({
-      googleToken: `${import.meta.env.VITE_GOOGLE_API_KEY}`,
-    })
-  }, [])
+  const onChangeSearch = (search: string) => {
+    dispatch(searchActions.setSearch({ search }))
+  }
 
-  console.log(search)
+  useEffect(() => {
+    if (token) {
+      addToken({
+        googleToken: `${import.meta.env.VITE_GOOGLE_API_KEY}`,
+      })
+    }
+  }, [addToken, token])
+
+  useEffect(() => {
+    if (data && data.queryId) {
+      dispatch(searchActions.setSearchId({ searchId: data.queryId }))
+    }
+  }, [data])
 
   const searchWrapperClasses = clsx(search ? s.searchResultWrapper : s.searchDefaultWrapper)
 
+  const loadingStatus = isLoading || isFetching
+
   return (
-    <Page className={searchWrapperClasses}>
+    <>
       {isLoading && <LinearProgressBar />}
-      {data && <SearchResult data={data} search={search} />}
-      {!isLoading && !data && <SearchDefault onChangeSearch={onChangeSearch} />}
-    </Page>
+      <Page className={searchWrapperClasses}>
+        {!isLoading && !data && <SearchDefault onChangeSearch={onChangeSearch} />}
+        {data && <SearchResult onChangeSearch={onChangeSearch} />}
+        {!loadingStatus && data && <CustomPagination totalCount={+data.pageInfo.totalResults} />}
+      </Page>
+    </>
   )
 }

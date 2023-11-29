@@ -1,7 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react'
+import React, { useState } from 'react'
 
+import { useAppSelector } from '@/common'
 import { CustomModal } from '@/components'
-import { AddFavouritesForm } from '@/features'
+import { FavouritesForm, selectSearch } from '@/features'
 import { HeartOutlined } from '@ant-design/icons'
 import Search, { SearchProps } from 'antd/lib/input/Search'
 import clsx from 'clsx'
@@ -10,15 +11,16 @@ import s from './SearchPanel.module.scss'
 
 type Props = {
   className?: string
-  onChangeSearch?: (text: string) => void
-  search?: string
+  loadingStatus?: boolean
+  onChangeSearch: (text: string) => void
 }
 
-export const SearchPanel: React.FC<Props> = ({ className, onChangeSearch, search }) => {
+export const SearchPanel: React.FC<Props> = ({ className, loadingStatus, onChangeSearch }) => {
   const [open, setOpen] = useState(false)
 
+  const search = useAppSelector(selectSearch)
+
   const onIconClickHandler = () => {
-    console.log('123')
     setOpen(true)
   }
 
@@ -35,13 +37,14 @@ export const SearchPanel: React.FC<Props> = ({ className, onChangeSearch, search
       <Search
         className={searchClasses}
         enterButton={'Найти'}
+        loading={loadingStatus}
         onSearch={onSearchHandler}
-        placeholder={'Что хотите посмотреть?'}
+        placeholder={search ? search : 'Что хотите посмотреть?'}
         size={'large'}
         suffix={search && suffix}
       />
       <CustomModal open={open} setOpen={setOpen} title={'Сохранить запрос'}>
-        <AddFavouritesForm setOpen={setOpen} />
+        <FavouritesForm setOpen={setOpen} />
       </CustomModal>
     </>
   )
