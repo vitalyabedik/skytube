@@ -35,12 +35,6 @@ export const SearchPage: React.FC = () => {
     }
   }, [addToken, token])
 
-  useEffect(() => {
-    if (data && data.queryId) {
-      dispatch(searchActions.setSearchId({ searchId: data.queryId }))
-    }
-  }, [data])
-
   const searchWrapperClasses = clsx(search ? s.searchResultWrapper : s.searchDefaultWrapper)
 
   const loadingStatus = isLoading || isFetching
