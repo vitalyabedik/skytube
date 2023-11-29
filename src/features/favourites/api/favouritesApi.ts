@@ -27,8 +27,20 @@ export const favouritesApi = baseApi.injectEndpoints({
         url: `query/deleteSavedQuery/${id}`,
       }),
     }),
+    updateFavourite: builder.mutation<CreateFavouriteResponseType, Upda>({
+      invalidatesTags: ['Favourites'],
+      query: ({ body, id }) => ({
+        body,
+        method: 'PATCH',
+        url: `query/editSavedQuery/${id}`,
+      }),
+    }),
   }),
 })
 
-export const { useCreateFavouriteMutation, useGetFavouritesQuery, useRemoveFavouriteMutation } =
-  favouritesApi
+export const {
+  useCreateFavouriteMutation,
+  useGetFavouritesQuery,
+  useRemoveFavouriteMutation,
+  useUpdateFavouriteMutation,
+} = favouritesApi

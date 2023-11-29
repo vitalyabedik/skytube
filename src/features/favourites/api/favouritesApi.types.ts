@@ -33,6 +33,8 @@ export type CreateFavouriteResponseType = {
   updatedAt: string
 }
 
+export type UpdateFavouriteBodyType = Omit<CreateFavouriteBodyType, 'request'>
+
 export type RemoveFavouriteResponseType = {
   countDeleted: number
   message: string
