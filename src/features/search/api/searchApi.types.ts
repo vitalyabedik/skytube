@@ -22,7 +22,6 @@ export type VideosItemType = {
   id: string
   snippet: VideoType
   statistics: StatisticsType
-  thumbnails: VideoThumbnailsType
 }
 
 export type PaginationType = {
@@ -47,6 +46,7 @@ export type VideoThumbnailsType = {
 export type VideoType = {
   channelId: string
   description: string
+  thumbnails: VideoThumbnailsType
   title: string
 }
 
