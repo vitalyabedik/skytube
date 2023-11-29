@@ -1,18 +1,28 @@
-export type VideosResponseType = {
+export type GetVideosResponseType = {
   items: VideosItemType[]
   pageInfo: PageInfoType
+  queryId: string
+}
+
+export type GetVideosParamsType = {
+  countResult?: string
+  nextPageToken?: string
+  prevPageToken?: string
+  query: string
+  sortBy?: string
+}
+
+export type PageInfoType = {
+  pagination: PaginationType
+  resultsPerPage: string
+  totalResults: string
 }
 
 export type VideosItemType = {
   id: string
   snippet: VideoType
   statistics: StatisticsType
-}
-
-export type PageInfoType = {
-  pagination: PaginationType
-  resultsPerPage: number
-  totalResults: number
+  thumbnails: VideoThumbnailsType
 }
 
 export type PaginationType = {
@@ -29,7 +39,9 @@ export type ImageType = {
 export type VideoThumbnailsType = {
   default: ImageType
   high: ImageType
+  maxres: ImageType
   medium: ImageType
+  standard: ImageType
 }
 
 export type VideoType = {

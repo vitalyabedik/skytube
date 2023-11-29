@@ -1,13 +1,14 @@
 import { baseApi } from '@/common'
-import { VideosResponseType } from '@/features'
+import { GetVideosParamsType, GetVideosResponseType } from '@/features'
 
 export const searchApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getVideos: builder.query<VideosResponseType, string>({
+    getVideos: builder.query<GetVideosResponseType, GetVideosParamsType>({
       providesTags: ['Search'],
-      query: query => ({
+      query: params => ({
         method: 'GET',
-        url: `query/search/${query}`,
+        params: params ?? {},
+        url: `query/search`,
       }),
     }),
   }),
