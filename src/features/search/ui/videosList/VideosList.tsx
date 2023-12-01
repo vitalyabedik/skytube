@@ -1,20 +1,16 @@
 import React from 'react'
 
-import { useAppSelector } from '@/common'
-import { VisibleType, selectSearch, useGetVideosQuery } from '@/features'
+import { VideosItemType, VisibleType } from '@/features'
 import Flex from 'antd/lib/flex'
 
 import { VideoItem } from './videoItem'
 
 type Props = {
+  videos: VideosItemType[]
   visibleMode: VisibleType
 }
 
-export const VideosList: React.FC<Props> = ({ visibleMode }) => {
-  const search = useAppSelector(selectSearch)
-
-  const { data: videos } = useGetVideosQuery({ query: search }, { skip: !search })
-
+export const VideosList: React.FC<Props> = ({ videos, visibleMode }) => {
   const isGrid = visibleMode === 'grid'
   const isList = visibleMode === 'list'
 
@@ -25,8 +21,8 @@ export const VideosList: React.FC<Props> = ({ visibleMode }) => {
       vertical={isList}
       wrap={isGrid ? 'wrap' : 'nowrap'}
     >
-      {videos?.items?.map(video => {
-        return <VideoItem key={video.id} video={video} visibleMode={visibleMode} />
+      {videos?.map(video => {
+        return <VideoItem key={video?.id} video={video} visibleMode={visibleMode} />
       })}
     </Flex>
   )

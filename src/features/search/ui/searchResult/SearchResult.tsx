@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import { useAppSelector } from '@/common'
-import { Preloader } from '@/components'
-import { selectSearch, useGetVideosQuery } from '@/features'
+import { CustomPagination, LinearProgressBar, Preloader } from '@/components'
+import { selectSearch, selectSearchQuery, useGetVideosQuery } from '@/features'
 import AppstoreOutlined from '@ant-design/icons/AppstoreOutlined'
 import BarsOutlined from '@ant-design/icons/BarsOutlined'
 import Flex from 'antd/lib/flex'
@@ -23,13 +23,28 @@ type Props = {
 export const SearchResult: React.FC<Props> = ({ onChangeSearch }) => {
   const [isActive, setIsActive] = useState(false)
   const [visibleMode, setVisibleMode] = useState<VisibleType>('grid')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const search = useAppSelector(selectSearch)
+  const queryParams = useAppSelector(selectSearchQuery)
 
-  const { data, isFetching, isLoading } = useGetVideosQuery({ query: search }, { skip: !search })
+  const { data, isFetching, isLoading } = useGetVideosQuery({
+    countResult: queryParams.countResult,
+    query: search,
+    sortBy: queryParams.sortBy,
+  })
 
   const gridIconClasses = clsx(s.icon, !isActive && s.active)
   const listIconClasses = clsx(s.icon, isActive && s.active)
+
+  const onChangePageSizeHandler = (currentPageSize: number) => {
+    setPageSize(currentPageSize)
+  }
+
+  const onChangeCurrentPageHandler = (currentPage: number) => {
+    setPageSize(currentPage)
+  }
 
   const onChangeModeHandler = (mode: VisibleType) => {
     if (visibleMode !== mode) {
@@ -39,6 +54,10 @@ export const SearchResult: React.FC<Props> = ({ onChangeSearch }) => {
   }
 
   const loadingStatus = isLoading || isFetching
+
+  if (isLoading) {
+    return <LinearProgressBar />
+  }
 
   return (
     <>
@@ -71,7 +90,16 @@ export const SearchResult: React.FC<Props> = ({ onChangeSearch }) => {
               </Flex>
             </Flex>
           )}
-          {!loadingStatus && <VideosList visibleMode={visibleMode} />}
+          {!loadingStatus && <VideosList videos={data.items} visibleMode={visibleMode} />}
+          {!loadingStatus && (
+            <CustomPagination
+              changeCurrentPage={onChangeCurrentPageHandler}
+              changePageSize={onChangePageSizeHandler}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalCount={+data.pageInfo.totalResults}
+            />
+          )}
           {loadingStatus && <Preloader />}
         </>
       )}
