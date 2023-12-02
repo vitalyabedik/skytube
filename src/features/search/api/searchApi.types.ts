@@ -1,3 +1,5 @@
+import { sortByType } from '@/features'
+
 export type GetVideosResponseType = {
   items: VideosItemType[]
   pageInfo: PageInfoType
@@ -6,10 +8,17 @@ export type GetVideosResponseType = {
 
 export type GetVideosParamsType = {
   countResult?: string
-  nextPageToken?: string
-  prevPageToken?: string
+  nextPageToken?: null | string
+  prevPageToken?: null | string
   query: string
-  sortBy?: string
+  sortBy?: sortByType
+}
+
+export type GetQueryParamsType = {
+  countResult?: null | string
+  nextPageToken?: null | string
+  prevPageToken?: null | string
+  sortBy?: null | sortByType
 }
 
 export type PageInfoType = {

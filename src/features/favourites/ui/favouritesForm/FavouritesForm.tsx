@@ -136,8 +136,7 @@ export const FavouritesForm: React.FC<Props> = ({
                 { label: 'По дате', value: 'date' },
                 { label: 'По рейтингу', value: 'rating' },
                 { label: 'По названию', value: 'title' },
-                { label: 'По количеству видео', value: 'videoCount' },
-                { label: 'По числу просмотров', value: 'viewCount ' },
+                { label: 'По числу просмотров', value: 'viewCount' },
               ]}
               value={getValues('sortBy')}
             />
