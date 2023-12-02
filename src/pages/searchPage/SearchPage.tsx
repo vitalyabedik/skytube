@@ -5,7 +5,9 @@ import { Page } from '@/components'
 import {
   SearchDefault,
   SearchResult,
+  authActions,
   searchActions,
+  selectIsAuth,
   selectSearch,
   useAddTokenMutation,
 } from '@/features'
@@ -16,6 +18,7 @@ import s from './SearchPage.module.scss'
 export const SearchPage: React.FC = () => {
   const search = useAppSelector(selectSearch)
   const token = localStorage.getItem('token')
+  const isAuth = useAppSelector(selectIsAuth)
 
   const dispatch = useAppDispatch()
 
@@ -26,10 +29,12 @@ export const SearchPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (token) {
+    if (token && !isAuth) {
       addToken({
         googleToken: `${import.meta.env.VITE_GOOGLE_API_KEY}`,
       })
+
+      dispatch(authActions.setAuth({ isAuth: true }))
     }
   }, [addToken, token])
 

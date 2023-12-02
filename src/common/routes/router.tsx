@@ -1,8 +1,9 @@
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Route } from '@/common'
+import { Route, useAppSelector } from '@/common'
 import { CustomHeader } from '@/components'
-import { Layout } from 'antd'
+import { selectIsAuth } from '@/features'
+import Layout from 'antd/lib/layout'
 
 import s from './AppLayout.module.scss'
 
@@ -12,11 +13,15 @@ import { privateRoutes, publicRoutes } from './routerSettings'
 const AppLayout = () => {
   const { Content, Header } = Layout
 
+  const isAuth = useAppSelector(selectIsAuth)
+
   return (
     <Layout>
-      <Header>
-        <CustomHeader />
-      </Header>
+      {isAuth && (
+        <Header>
+          <CustomHeader />
+        </Header>
+      )}
       <Content className={s.content}>
         <Outlet />
       </Content>

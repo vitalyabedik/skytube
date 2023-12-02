@@ -7,7 +7,6 @@ import { LoginBodyType, LoginForm, authActions, selectIsAuth, useLoginMutation }
 
 export const LoginPage: React.FC = () => {
   const isAuth = useAppSelector(selectIsAuth)
-  const token = localStorage.getItem('token')
 
   const dispatch = useAppDispatch()
 
@@ -15,21 +14,26 @@ export const LoginPage: React.FC = () => {
 
   const loginHandler = (loginData: LoginBodyType) => {
     login(loginData)
-  }
-
-  if (isAuth || token) {
-    return <Navigate replace to={Route.Main} />
+      .unwrap()
+      .then(() => {
+        dispatch(authActions.setAuth({ isAuth: true }))
+      })
   }
 
   if (data && 'accessToken' in data) {
     localStorage.setItem('token', data.accessToken)
-    dispatch(authActions.setAuth({ isAuth: true }))
+  }
+
+  if (isAuth) {
+    return <Navigate replace to={Route.Main} />
   }
 
   return (
-    <Page>
+    <>
       {isLoading && <LinearProgressBar />}
-      <LoginForm onSubmit={loginHandler} />
-    </Page>
+      <Page>
+        <LoginForm onSubmit={loginHandler} />
+      </Page>
+    </>
   )
 }
