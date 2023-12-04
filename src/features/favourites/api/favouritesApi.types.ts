@@ -12,7 +12,7 @@ export type QueryType = {
   title: string
 }
 
-export type sortByType = 'date' | 'rating' | 'relevance' | 'title' | 'videoCount' | 'viewCount'
+export type sortByType = 'date' | 'rating' | 'relevance' | 'title' | 'viewCount'
 
 export type CreateFavouriteBodyType = {
   body: CreateBodyType

@@ -5,15 +5,16 @@ import { FavouritesList, useGetFavouritesQuery } from '@/features'
 import Title from 'antd/lib/typography/Title'
 
 export const FavouritesPage: React.FC = () => {
-  const { data, isLoading } = useGetFavouritesQuery()
+  const { data, isFetching, isLoading } = useGetFavouritesQuery()
+
+  if (isLoading || isFetching) {
+    return <LinearProgressBar />
+  }
 
   return (
-    <>
-      {isLoading && <LinearProgressBar />}
-      <Page>
-        <Title level={2}>Избранное</Title>
-        {data && <FavouritesList />}
-      </Page>
-    </>
+    <Page>
+      <Title level={2}>Избранное</Title>
+      {data && <FavouritesList />}
+    </Page>
   )
 }
