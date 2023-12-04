@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
-import { AppRootStateType } from '@/app/model/store'
+import { AppRootStateType } from '@/features'
 
 /**
  * Custom React hook that allows selecting data from the Redux store's state with type safety.
