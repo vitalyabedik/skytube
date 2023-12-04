@@ -1,15 +1,7 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 
-import { Route, useAppDispatch } from '@/common'
 import { CustomModal } from '@/components'
-import {
-  FavouriteType,
-  FavouritesForm,
-  searchActions,
-  useGetFavouritesQuery,
-  useRemoveFavouriteMutation,
-} from '@/features'
+import { FavouriteType, FavouritesForm } from '@/features'
 import Button from 'antd/lib/button'
 import Flex from 'antd/lib/flex'
 import List from 'antd/lib/list'
@@ -17,49 +9,43 @@ import Text from 'antd/lib/typography/Text'
 
 import s from './FavouritesList.module.scss'
 
+import { useFavouriteItem } from '../../hooks/useFavouriteItem'
+
 export const FavouritesList: React.FC = () => {
-  const [open, setOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<FavouriteType | null>(null)
-
-  const { data } = useGetFavouritesQuery()
-  const [removeFavourite] = useRemoveFavouriteMutation()
-
-  const navigate = useNavigate()
-
-  const dispatch = useAppDispatch()
-
-  const onClickHandler = (search: string) => {
-    dispatch(searchActions.setSearch({ search }))
-    navigate(Route.Search)
-  }
-
-  const onClickEdit = (id: string) => {
-    const selectedItem = data?.find(item => item.id === id)
-
-    setSelectedItem(selectedItem ?? null)
-    setOpen(true)
-  }
-
-  const onClickDelete = (id: string) => {
-    removeFavourite(id)
-  }
+  const {
+    deleteFavouriteQueryCallback,
+    editFavouriteQueryCallback,
+    favouritesItems,
+    fetchFavouriteQueryCallback,
+    open,
+    selectedItem,
+    setOpen,
+  } = useFavouriteItem()
 
   return (
     <>
       <List
-        dataSource={data as FavouriteType[]}
+        dataSource={favouritesItems as FavouriteType[]}
         renderItem={(item: FavouriteType) => (
           <>
             <List.Item className={s.item}>
               <Flex align={'center'} className={s.buttonWrapper} justify={'space-between'}>
-                <Text className={s.text} onClick={() => onClickHandler(item?.query?.text)} strong>
+                <Text
+                  className={s.text}
+                  onClick={() => fetchFavouriteQueryCallback(item?.query)}
+                  strong
+                >
                   {item?.query?.title}
                 </Text>
                 <Flex>
-                  <Button onClick={() => onClickEdit(item?.id)} type={'link'}>
+                  <Button onClick={() => editFavouriteQueryCallback(item?.id)} type={'link'}>
                     Изменить
                   </Button>
-                  <Button danger onClick={() => onClickDelete(item?.id)} type={'link'}>
+                  <Button
+                    danger
+                    onClick={() => deleteFavouriteQueryCallback(item?.id)}
+                    type={'link'}
+                  >
                     Удалить
                   </Button>
                 </Flex>
