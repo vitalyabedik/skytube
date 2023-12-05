@@ -1,4 +1,6 @@
-export type SignUpResponseType = {
+export type SignUpResponseType = SignUpErrorResponseType | SignUpSuccessResponseType
+
+export type SignUpSuccessResponseType = {
   createdAt: string
   email: string
   googleToken: null
@@ -8,7 +10,11 @@ export type SignUpResponseType = {
   updatedAt: string
 }
 
-export type SignUpBodyType = Pick<SignUpResponseType, 'email' | 'login' | 'password'>
+export type SignUpErrorResponseType = {
+  message: string
+}
+
+export type SignUpBodyType = Pick<SignUpSuccessResponseType, 'email' | 'login' | 'password'>
 
 export type LoginBodyType = Omit<SignUpBodyType, 'email'>
 

@@ -1,24 +1,12 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { Route, useAppDispatch, useAppSelector } from '@/common'
+import { Route } from '@/common'
 import { LinearProgressBar, Page } from '@/components'
-import { LoginBodyType, LoginForm, authActions, selectIsAuth, useLoginMutation } from '@/features'
+import { LoginForm, useLogin } from '@/features'
 
 export const LoginPage: React.FC = () => {
-  const isAuth = useAppSelector(selectIsAuth)
-
-  const dispatch = useAppDispatch()
-
-  const [login, { data, isLoading }] = useLoginMutation()
-
-  const loginHandler = (loginData: LoginBodyType) => {
-    login(loginData)
-      .unwrap()
-      .then(() => {
-        dispatch(authActions.setAuth({ isAuth: true }))
-      })
-  }
+  const { data, isAuth, isLoading, loginCallback } = useLogin()
 
   if (data && 'accessToken' in data) {
     localStorage.setItem('token', data.accessToken)
@@ -32,7 +20,7 @@ export const LoginPage: React.FC = () => {
     <>
       {isLoading && <LinearProgressBar />}
       <Page>
-        <LoginForm onSubmit={loginHandler} />
+        <LoginForm onSubmit={loginCallback} />
       </Page>
     </>
   )
