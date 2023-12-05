@@ -20,9 +20,9 @@ export const useFavouriteFormValues = ({
   const initialSortByValue =
     formVariant === 'add' ? 'relevance' : favouriteItem?.query?.sortBy ?? 'relevance'
   const initialTitleValue = formVariant === 'add' ? '' : favouriteItem?.query?.title ?? ''
-  const initialMaxCountValue = formVariant === 'add' ? 1 : favouriteItem?.query?.maxCount ?? 1
+  const initialMaxCountValue = formVariant === 'add' ? 10 : favouriteItem?.query?.maxCount ?? 10
 
-  const [inputValue, setInputValue] = useState(initialMaxCountValue)
+  const [_, setInputValue] = useState(initialMaxCountValue)
 
   const { data } = useGetVideosQuery({ query: search }, { skip: !search })
 

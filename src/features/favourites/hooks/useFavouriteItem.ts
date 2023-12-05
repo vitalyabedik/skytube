@@ -9,6 +9,7 @@ import {
   useGetFavouritesQuery,
   useRemoveFavouriteMutation,
 } from '@/features'
+import { message } from 'antd'
 
 export const useFavouriteItem = () => {
   const [open, setOpen] = useState(false)
@@ -46,6 +47,13 @@ export const useFavouriteItem = () => {
 
   const deleteFavouriteQueryCallback = (id: string) => {
     removeFavourite(id)
+      .unwrap()
+      .then(() => {
+        message.success(`Query is deleted successfully`)
+      })
+      .catch(error => {
+        message.error(error.error)
+      })
   }
 
   return {
