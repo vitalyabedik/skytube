@@ -5,12 +5,7 @@ import { LoginLogo } from '@/assets'
 import { Route } from '@/common'
 import { FormField } from '@/components'
 import { LoginBodyType } from '@/features'
-import Button from 'antd/lib/button'
-import Card from 'antd/lib/card'
-import Flex from 'antd/lib/flex'
-import Input from 'antd/lib/input'
-import Text from 'antd/lib/typography/Text'
-import Title from 'antd/lib/typography/Title'
+import { Button, Card, Flex, Input, Typography } from 'antd'
 
 import s from './LoginForm.module.scss'
 
@@ -21,6 +16,8 @@ type Props = {
 }
 
 export const LoginForm: React.FC<Props> = ({ onSubmit }) => {
+  const { Text, Title } = Typography
+
   const {
     control,
     formState: { errors },
