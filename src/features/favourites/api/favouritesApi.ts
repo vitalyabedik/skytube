@@ -5,6 +5,7 @@ import {
   GetFavouritesResponseType,
   RemoveFavouriteResponseType,
   UpdateFavouriteBodyType,
+  UpdateFavouriteResponseType,
 } from '@/features'
 
 export const favouritesApi = baseApi.injectEndpoints({
@@ -28,7 +29,7 @@ export const favouritesApi = baseApi.injectEndpoints({
         url: `query/deleteSavedQuery/${id}`,
       }),
     }),
-    updateFavourite: builder.mutation<CreateFavouriteResponseType, UpdateFavouriteBodyType>({
+    updateFavourite: builder.mutation<UpdateFavouriteResponseType, UpdateFavouriteBodyType>({
       invalidatesTags: ['Favourites'],
       query: ({ body, id }) => ({
         body,

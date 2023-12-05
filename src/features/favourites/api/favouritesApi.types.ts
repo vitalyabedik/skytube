@@ -28,12 +28,15 @@ export type CreateBodyType = {
 
 export type CreateFavouriteResponseType = {
   cratedAt: string
+  data: CreateBodyType
   id: string
   queryId: string
   updatedAt: string
 }
 
 export type UpdateFavouriteBodyType = Omit<CreateFavouriteBodyType, 'request'>
+
+export type UpdateFavouriteResponseType = Omit<CreateBodyType, 'request'>
 
 export type RemoveFavouriteResponseType = {
   countDeleted: number
