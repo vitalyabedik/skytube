@@ -3,16 +3,12 @@ import { Navigate } from 'react-router-dom'
 
 import { Route } from '@/common'
 import { LinearProgressBar, Page } from '@/components'
-import { SignUpBodyType, SignUpForm, useSignUpMutation } from '@/features'
+import { SignUpForm, useSignUp } from '@/features'
 
 export const SignUpPage: React.FC = () => {
+  const { isLoading, signUpCallback } = useSignUp()
+
   const token = localStorage.getItem('token')
-
-  const [signUp, { isLoading }] = useSignUpMutation()
-
-  const signUpHandler = (signUpData: SignUpBodyType) => {
-    signUp(signUpData)
-  }
 
   if (token) {
     return <Navigate replace to={Route.Main} />
@@ -21,7 +17,7 @@ export const SignUpPage: React.FC = () => {
   return (
     <Page>
       {isLoading && <LinearProgressBar />}
-      <SignUpForm onSubmit={signUpHandler} />
+      <SignUpForm onSubmit={signUpCallback} />
     </Page>
   )
 }
