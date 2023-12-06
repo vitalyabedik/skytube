@@ -1,6 +1,5 @@
 {
   "name": "skytube",
-  "homepage":"https://vitalyabedik.github.io/skytube",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,9 +8,7 @@
     "build": "tsc && vite build",
     "format": "prettier --write src",
     "lint": "eslint . --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
@@ -19,7 +16,6 @@
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.11.1",
     "clsx": "^2.0.0",
-    "gh-pages": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
