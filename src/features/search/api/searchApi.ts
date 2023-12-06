@@ -1,4 +1,4 @@
-import { baseApi } from '@/common'
+import { baseApi, handleQueryError } from '@/common'
 import { GetVideosParamsType, GetVideosResponseType } from '@/features'
 
 export const searchApi = baseApi.injectEndpoints({
@@ -10,6 +10,7 @@ export const searchApi = baseApi.injectEndpoints({
         params: params ?? {},
         url: `query/search`,
       }),
+      transformErrorResponse: res => handleQueryError(res),
     }),
   }),
 })
