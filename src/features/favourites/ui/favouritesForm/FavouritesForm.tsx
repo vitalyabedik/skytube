@@ -8,7 +8,6 @@ import {
   useFavouriteCallbacksForm,
   useFavouriteFormValues,
 } from '@/features'
-import { SliderMarks } from 'antd/es/slider'
 import Button from 'antd/lib/button'
 import Flex from 'antd/lib/flex'
 import Input from 'antd/lib/input'
@@ -24,15 +23,6 @@ type Props = {
   favouriteItem?: FavouriteType
   formVariant?: FormVariantType
   setOpen: (open: boolean) => void
-}
-
-const marks: SliderMarks = {
-  1: '1',
-  4: '4',
-  8: '8',
-  10: '10',
-  12: '12',
-  16: '16',
 }
 
 export const FavouritesForm: React.FC<Props> = ({
@@ -64,10 +54,13 @@ export const FavouritesForm: React.FC<Props> = ({
   })
 
   const handleOk = () => {
-    setOpen(false)
+    if (!errors.title) {
+      setOpen(false)
+    }
   }
 
   const handleCancel = () => {
+    debugger
     setOpen(false)
   }
 
@@ -141,16 +134,14 @@ export const FavouritesForm: React.FC<Props> = ({
                 className={s.slider}
                 defaultValue={1}
                 id={'maxCount'}
-                marks={marks}
-                max={16}
+                max={50}
                 min={1}
                 onChange={handleChangeInputValue}
-                step={null}
               />
 
               <InputNumber
                 className={s.numberInput}
-                max={16}
+                max={50}
                 min={1}
                 onChange={handleChangeInputValue}
                 value={field.value}
