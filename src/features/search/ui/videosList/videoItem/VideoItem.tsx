@@ -1,6 +1,7 @@
 import React from 'react'
 import YouTube from 'react-youtube'
 
+import { formatViewsCount } from '@/common'
 import { VideosItemType, VisibleType } from '@/features'
 import Flex from 'antd/lib/flex'
 import Image from 'antd/lib/image'
@@ -52,7 +53,7 @@ export const VideoItem: React.FC<Props> = ({ video, visibleMode }: Props) => {
               ? video?.snippet?.description
               : 'Video without description'}
           </Text>
-          <span className={s.viewCount}>{video?.statistics?.viewCount} тыс. просмотров</span>
+          <span className={s.viewCount}>{formatViewsCount(+video?.statistics?.viewCount)}</span>
         </div>
       </Flex>
     </Flex>
