@@ -1,3 +1,4 @@
+import { handleQueryError } from '@/common'
 import { baseApi } from '@/common/api'
 import {
   CreateFavouriteBodyType,
@@ -21,6 +22,7 @@ export const favouritesApi = baseApi.injectEndpoints({
     getFavourites: builder.query<GetFavouritesResponseType | null, void>({
       providesTags: ['Favourites'],
       query: () => `query/getFavourites`,
+      transformErrorResponse: res => handleQueryError(res),
     }),
     removeFavourite: builder.mutation<RemoveFavouriteResponseType, string>({
       invalidatesTags: ['Favourites'],
