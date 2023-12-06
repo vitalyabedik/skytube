@@ -1,0 +1,7 @@
+@import '@/styles/mixins';
+
+.root {
+  @include flex($justify: center, $align: center);
+
+  margin: 3rem;
+}
