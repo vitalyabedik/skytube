@@ -25,7 +25,7 @@ export const useFavouriteItem = () => {
     dispatch(
       searchActions.setQuery({
         query: {
-          countResult: query.maxCount,
+          countResult: +query.maxCount,
           sortBy: query.sortBy,
         },
       })
