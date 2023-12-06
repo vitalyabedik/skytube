@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import { useAppSelector } from '@/common'
+import { useAppDispatch, useAppSelector } from '@/common'
 import { CustomPagination, LinearProgressBar, Preloader } from '@/components'
-import { selectSearch, selectSearchQuery, useGetVideosQuery } from '@/features'
+import { searchActions, selectSearch, selectSearchQuery, useGetVideosQuery } from '@/features'
 import AppstoreOutlined from '@ant-design/icons/AppstoreOutlined'
 import BarsOutlined from '@ant-design/icons/BarsOutlined'
 import Flex from 'antd/lib/flex'
@@ -24,27 +24,58 @@ export const SearchResult: React.FC<Props> = ({ onChangeSearch }) => {
   const [isActive, setIsActive] = useState(false)
   const [visibleMode, setVisibleMode] = useState<VisibleType>('grid')
   const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
+  const [prevPage, setPrevPage] = useState(0)
 
   const search = useAppSelector(selectSearch)
   const queryParams = useAppSelector(selectSearchQuery)
+  const [pageSize, setPageSize] = useState(queryParams?.countResult ?? 8)
+
+  const dispatch = useAppDispatch()
+
+  const nextPageToken = currentPage > prevPage ? queryParams.nextPageToken : ''
+  const prevPageToken = currentPage <= prevPage ? queryParams.prevPageToken : ''
 
   const { data, isFetching, isLoading } = useGetVideosQuery({
-    countResult: queryParams.countResult,
+    countResult: queryParams.countResult ?? 8,
+    nextPageToken,
+    prevPageToken,
     query: search,
-    sortBy: queryParams.sortBy,
+    sortBy: queryParams.sortBy ?? 'relevance',
   })
-
-  const gridIconClasses = clsx(s.icon, !isActive && s.active)
-  const listIconClasses = clsx(s.icon, isActive && s.active)
 
   const onChangePageSizeHandler = (currentPageSize: number) => {
     setPageSize(currentPageSize)
+
+    dispatch(
+      searchActions.setQuery({
+        query: {
+          countResult: currentPageSize,
+          nextPageToken: data?.pageInfo?.pagination?.nextPageToken ?? '',
+          prevPageToken: data?.pageInfo?.pagination?.prevPageToken ?? '',
+          sortBy: queryParams?.sortBy,
+        },
+      })
+    )
   }
 
-  const onChangeCurrentPageHandler = (currentPage: number) => {
-    setPageSize(currentPage)
+  const onChangeCurrentPageHandler = (newCurrentPage: number) => {
+    setPrevPage(currentPage)
+    setCurrentPage(newCurrentPage)
+
+    dispatch(
+      searchActions.setQuery({
+        query: {
+          countResult: queryParams?.countResult,
+          nextPageToken: data?.pageInfo?.pagination?.nextPageToken ?? '',
+          prevPageToken: data?.pageInfo?.pagination?.prevPageToken ?? '',
+          sortBy: queryParams?.sortBy,
+        },
+      })
+    )
   }
+
+  const gridIconClasses = clsx(s.icon, !isActive && s.active)
+  const listIconClasses = clsx(s.icon, isActive && s.active)
 
   const onChangeModeHandler = (mode: VisibleType) => {
     if (visibleMode !== mode) {

@@ -7,7 +7,7 @@ export type GetVideosResponseType = {
 }
 
 export type GetVideosParamsType = {
-  countResult?: string
+  countResult?: number
   nextPageToken?: null | string
   prevPageToken?: null | string
   query: string
@@ -15,7 +15,7 @@ export type GetVideosParamsType = {
 }
 
 export type GetQueryParamsType = {
-  countResult?: null | string
+  countResult?: null | number
   nextPageToken?: null | string
   prevPageToken?: null | string
   sortBy?: null | sortByType

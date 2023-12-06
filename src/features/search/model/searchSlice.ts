@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   query: {
-    countResult: '8',
+    countResult: 8,
     nextPageToken: '',
     prevPageToken: '',
     sortBy: 'relevance',
