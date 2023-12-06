@@ -3,9 +3,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   query: {
-    countResult: '10',
-    nextPageToken: null,
-    prevPageToken: null,
+    countResult: '8',
+    nextPageToken: '',
+    prevPageToken: '',
     sortBy: 'relevance',
   } as GetQueryParamsType,
   search: '',
