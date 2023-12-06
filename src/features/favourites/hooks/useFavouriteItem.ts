@@ -46,14 +46,9 @@ export const useFavouriteItem = () => {
   }
 
   const deleteFavouriteQueryCallback = (id: string) => {
-    removeFavourite(id)
-      .unwrap()
-      .then(() => {
-        message.success(`Query is deleted successfully`)
-      })
-      .catch(error => {
-        message.error(error.error)
-      })
+    removeFavourite(id).then(() => {
+      message.success(`Query successfully deleted`)
+    })
   }
 
   return {

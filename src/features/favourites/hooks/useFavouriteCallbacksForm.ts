@@ -1,3 +1,4 @@
+import { handleServerAppError, handleServerNetworkError } from '@/common'
 import {
   CreateFavouriteBodyType,
   FavouriteType,
@@ -29,11 +30,15 @@ export const useFavouriteCallbacksForm = () => {
       id: data?.queryId ?? '',
     } as CreateFavouriteBodyType)
       .unwrap()
-      .then(() => {
-        message.success(`${search} is successfully added to favourites`)
+      .then(res => {
+        message.success(`${res.data.title} successfully added to favourites`)
       })
-      .catch(() => {
-        message.error('some error occured')
+      .catch(error => {
+        if (error.status && error.status !== 400 && error.status !== 401) {
+          handleServerNetworkError(error)
+        } else {
+          handleServerAppError(error)
+        }
       })
   }
 
@@ -45,14 +50,9 @@ export const useFavouriteCallbacksForm = () => {
         title: values.title,
       },
       id: favouriteItem?.id,
-    } as UpdateFavouriteBodyType)
-      .unwrap()
-      .then(() => {
-        message.success(`${'search'} is successfully updated`)
-      })
-      .catch(() => {
-        message.error('some error occured')
-      })
+    } as UpdateFavouriteBodyType).then(() => {
+      message.success(`Query successfully updated`)
+    })
   }
 
   return {
