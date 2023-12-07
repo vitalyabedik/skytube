@@ -1,31 +1,7 @@
-.titleText {
-  font-weight: 400;
-}
-
 .searchPanel {
   margin-bottom: 4rem;
 }
 
-.countText {
-  padding-left: 1rem;
-
-  font-size: 1.6rem;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 2.4rem;
-  color: #1717194d;
-}
-
 h3:global(.ant-typography) {
   margin: 0;
-}
-
-.icon {
-  cursor: pointer;
-  font-size: 2.4rem;
-  opacity: 0.3;
-}
-
-.icon.active {
-  opacity: 1;
 }
