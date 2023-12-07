@@ -60,7 +60,6 @@ export const FavouritesForm: React.FC<Props> = ({
   }
 
   const handleCancel = () => {
-    debugger
     setOpen(false)
   }
 

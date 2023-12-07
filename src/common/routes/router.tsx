@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Route, useAppDispatch, useAppSelector } from '@/common'
+import { Route, getValueFromLocalStorage, useAppDispatch, useAppSelector } from '@/common'
 import { CustomHeader } from '@/components'
 import { authActions, selectIsAuth } from '@/features'
 import { App } from 'antd'
@@ -18,7 +18,7 @@ const AppLayout = () => {
   const dispatch = useAppDispatch()
 
   const isAuth = useAppSelector(selectIsAuth)
-  const token = localStorage.getItem('token')
+  const token = getValueFromLocalStorage('token')
 
   useEffect(() => {
     if (token && !isAuth) {

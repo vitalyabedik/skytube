@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { Route } from '@/common'
+import { Route, getValueFromLocalStorage } from '@/common'
 
 export const PrivateRoutes = () => {
-  const token = localStorage.getItem('token')
+  const token = getValueFromLocalStorage('token')
 
   return token ? <Outlet /> : <Navigate to={Route.Login} />
 }

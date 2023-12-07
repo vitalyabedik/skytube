@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { useAppDispatch, useAppSelector } from '@/common'
+import { getValueFromLocalStorage, useAppDispatch, useAppSelector } from '@/common'
 import { Page } from '@/components'
 import {
   SearchDefault,
@@ -15,7 +15,7 @@ import s from './SearchPage.module.scss'
 
 export const SearchPage: React.FC = () => {
   const search = useAppSelector(selectSearch)
-  const token = localStorage.getItem('token')
+  const token = getValueFromLocalStorage('token')
 
   const dispatch = useAppDispatch()
 
