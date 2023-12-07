@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import YouTube from 'react-youtube'
 
 import { formatViewsCount } from '@/common'
@@ -15,7 +15,7 @@ type Props = {
   visibleMode: VisibleType
 }
 
-export const VideoItem: React.FC<Props> = ({ video, visibleMode }: Props) => {
+export const VideoItem: React.FC<Props> = memo(({ video, visibleMode }: Props) => {
   const isGrid = visibleMode === 'grid'
 
   const classNames = {
@@ -58,4 +58,4 @@ export const VideoItem: React.FC<Props> = ({ video, visibleMode }: Props) => {
       </Flex>
     </Flex>
   )
-}
+})

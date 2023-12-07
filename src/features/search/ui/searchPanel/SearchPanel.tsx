@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 import { useAppSelector } from '@/common'
 import { CustomModal } from '@/components'
@@ -15,7 +15,7 @@ type Props = {
   onChangeSearch: (text: string) => void
 }
 
-export const SearchPanel: React.FC<Props> = ({ className, loadingStatus, onChangeSearch }) => {
+export const SearchPanel: React.FC<Props> = memo(({ className, loadingStatus, onChangeSearch }) => {
   const [open, setOpen] = useState(false)
 
   const search = useAppSelector(selectSearch)
@@ -28,8 +28,6 @@ export const SearchPanel: React.FC<Props> = ({ className, loadingStatus, onChang
     onChangeSearch(value)
   }
 
-  const suffix = <HeartOutlined className={s.heartIcon} onClick={onIconClickHandler} />
-
   const searchClasses = clsx(s.input, className)
 
   return (
@@ -41,11 +39,11 @@ export const SearchPanel: React.FC<Props> = ({ className, loadingStatus, onChang
         onSearch={onSearchHandler}
         placeholder={search ? search : 'Что хотите посмотреть?'}
         size={'large'}
-        suffix={search && suffix}
+        suffix={search && <HeartOutlined className={s.heartIcon} onClick={onIconClickHandler} />}
       />
       <CustomModal open={open} setOpen={setOpen} title={'Сохранить запрос'}>
         <FavouritesForm setOpen={setOpen} />
       </CustomModal>
     </>
   )
-}
+})

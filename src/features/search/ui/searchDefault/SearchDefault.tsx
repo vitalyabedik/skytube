@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import Title from 'antd/lib/typography/Title'
 
@@ -10,11 +10,11 @@ type Props = {
   onChangeSearch: (text: string) => void
 }
 
-export const SearchDefault: React.FC<Props> = ({ onChangeSearch }) => {
+export const SearchDefault: React.FC<Props> = memo(({ onChangeSearch }) => {
   return (
     <>
       <Title level={1}>Поиск видео</Title>
       <SearchPanel className={s.searchInput} onChangeSearch={onChangeSearch} />
     </>
   )
-}
+})

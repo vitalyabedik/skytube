@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { VideosItemType, VisibleType } from '@/features'
 import Flex from 'antd/lib/flex'
@@ -10,7 +10,7 @@ type Props = {
   visibleMode: VisibleType
 }
 
-export const VideosList: React.FC<Props> = ({ videos, visibleMode }) => {
+export const VideosList: React.FC<Props> = memo(({ videos, visibleMode }) => {
   const isGrid = visibleMode === 'grid'
   const isList = visibleMode === 'list'
 
@@ -26,4 +26,4 @@ export const VideosList: React.FC<Props> = ({ videos, visibleMode }) => {
       })}
     </Flex>
   )
-}
+})
