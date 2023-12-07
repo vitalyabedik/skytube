@@ -42,21 +42,18 @@ const AppLayout = () => {
   )
 }
 
-const router = createBrowserRouter(
-  [
-    {
-      children: [
-        {
-          children: privateRoutes,
-          element: <PrivateRoutes />,
-        },
-        ...publicRoutes,
-      ],
-      element: <AppLayout />,
-      errorElement: <Navigate to={Route.NotFound} />,
-    },
-  ],
-  { basename: import.meta.env.VITE_BASE_API_URL }
-)
+const router = createBrowserRouter([
+  {
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      ...publicRoutes,
+    ],
+    element: <AppLayout />,
+    errorElement: <Navigate to={Route.NotFound} />,
+  },
+])
 
 export const Router = () => <RouterProvider router={router} />
