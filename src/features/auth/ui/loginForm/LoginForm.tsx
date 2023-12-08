@@ -43,7 +43,6 @@ export const LoginForm: React.FC<Props> = ({ onSubmit }) => {
               <FormField control={control} errors={errors} label={'Пароль'} name={'password'}>
                 {field => (
                   <Input.Password
-                    className={s.formElement}
                     {...field}
                     allowClear
                     autoComplete={'password'}
