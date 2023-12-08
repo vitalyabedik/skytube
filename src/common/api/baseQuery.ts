@@ -7,7 +7,9 @@ export const baseQuery = fetchBaseQuery({
     const token = getValueFromLocalStorage('token')
 
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
+      const cleanToken = token.trim().slice(1, -1)
+
+      headers.set('Authorization', `Bearer ${cleanToken}`)
     }
   },
 })
