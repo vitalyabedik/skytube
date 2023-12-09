@@ -29,7 +29,11 @@ export const VideoItem: React.FC<Props> = memo(({ video, visibleMode }: Props) =
 
   return (
     <Flex className={classNames.root} gap={8} vertical={isGrid}>
-      <YoutubeVideo isGrid={isGrid} videoId={video?.id} />
+      <YoutubeVideo
+        coverImage={video?.snippet?.thumbnails?.high?.url}
+        isGrid={isGrid}
+        videoId={video?.id}
+      />
       <Flex className={classNames.description} vertical>
         <Text className={classNames.title}>{video?.snippet?.title}</Text>
         <div className={classNames?.description}>
