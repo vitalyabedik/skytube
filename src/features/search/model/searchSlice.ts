@@ -11,8 +11,6 @@ const initialState = {
   search: '',
 }
 
-export type SearchInitialStateType = typeof initialState
-
 export const searchSlice = createSlice({
   initialState,
   name: 'search',
