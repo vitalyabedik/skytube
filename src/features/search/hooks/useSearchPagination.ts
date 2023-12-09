@@ -10,6 +10,7 @@ export const useSearchPagination = () => {
   const queryParams = useAppSelector(selectSearchQuery)
 
   const [currentPage, setCurrentPage] = useState(1)
+
   const [prevPage, setPrevPage] = useState(0)
   const [pageSize, setPageSize] = useState(queryParams?.countResult ?? 8)
 
@@ -26,7 +27,6 @@ export const useSearchPagination = () => {
 
   const onChangePageSizeCallback = (currentPageSize: number) => {
     setPageSize(currentPageSize)
-
     dispatch(
       searchActions.setQuery({
         query: {
@@ -37,12 +37,21 @@ export const useSearchPagination = () => {
         },
       })
     )
+
+    if (queryParams?.countResult !== currentPageSize) {
+      setCurrentPage(1)
+      dispatch(
+        searchActions.resetQuery({
+          countResult: currentPageSize,
+          sortBy: queryParams?.sortBy ?? 'relevance',
+        })
+      )
+    }
   }
 
   const onChangeCurrentPageCallback = (newCurrentPage: number) => {
     setPrevPage(currentPage)
     setCurrentPage(newCurrentPage)
-
     dispatch(
       searchActions.setQuery({
         query: {
