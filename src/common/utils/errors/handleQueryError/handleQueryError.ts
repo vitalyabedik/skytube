@@ -5,7 +5,6 @@ import { message } from 'antd'
 export const handleQueryError = (response: FetchBaseQueryError | SerializedError | undefined) => {
   if (response && 'status' in response) {
     if ('error' in response) {
-      debugger
       message.error(response.error)
     }
   } else {

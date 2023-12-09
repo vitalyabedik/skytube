@@ -1,19 +1,3 @@
-import { message } from 'antd'
-
-export const handleServerAppError = (error: ServerAppErrorType) => {
-  debugger
-  if (error.data) {
-    debugger
-    message.error(error.data.message)
-  }
-
-  if (Array.isArray(error)) {
-    debugger
-    message.error(error[0].msg || 'Some error occurred')
-  }
-}
-
-// types
 export type ServerAppErrorType = {
   data: MessageErrorType
   error: ErrorResponseType
@@ -37,4 +21,8 @@ type ErrorResponseType = {
   location: string
   msg: string
   path: string
+}
+
+export type ServerErrorType = {
+  error: string
 }
