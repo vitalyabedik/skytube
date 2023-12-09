@@ -1,4 +1,4 @@
-import { GetQueryParamsType } from '@/features'
+import { GetQueryParamsType, sortByType } from '@/features'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -17,6 +17,14 @@ export const searchSlice = createSlice({
   initialState,
   name: 'search',
   reducers: {
+    resetQuery: (state, action: PayloadAction<{ countResult: number; sortBy: sortByType }>) => {
+      state.query = {
+        countResult: action.payload.countResult,
+        nextPageToken: '',
+        prevPageToken: '',
+        sortBy: action.payload.sortBy,
+      }
+    },
     setQuery: (state, action: PayloadAction<{ query: GetQueryParamsType }>) => {
       state.query = action.payload.query
     },
