@@ -9,9 +9,10 @@ import {
   useGetFavouritesQuery,
   useRemoveFavouriteMutation,
 } from '@/features'
-import { message } from 'antd'
+import { App } from 'antd'
 
 export const useFavouriteItem = () => {
+  const { message } = App.useApp()
   const [open, setOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<FavouriteType | null>(null)
 

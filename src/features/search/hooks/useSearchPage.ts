@@ -11,14 +11,14 @@ export const useSearchPage = () => {
 
   const [addToken] = useAddTokenMutation()
 
-  const onChangeCallback = (search: string) => {
-    dispatch(searchActions.setSearch({ search }))
+  const onChangeCallback = (searchTitle: string) => {
+    dispatch(searchActions.setSearch({ search: searchTitle }))
   }
 
   useEffect(() => {
     if (token) {
       addToken({
-        googleToken: `${import.meta.env.VITE_GOOGLE_API_KEY}`,
+        googleToken: import.meta.env.VITE_GOOGLE_API_KEY,
       })
     }
   }, [addToken, token])

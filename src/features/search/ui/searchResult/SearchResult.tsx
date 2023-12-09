@@ -45,23 +45,23 @@ export const SearchResult: React.FC<Props> = memo(({ onChangeSearch }) => {
       {data && (
         <>
           {!loadingStatus && (
-            <Flex align={'center'} gap={40} justify={'space-between'}>
-              <SearchResultInfo search={search} totalResults={+data?.pageInfo?.totalResults} />
-              <SearchResultModeIcons
-                isActive={isActive}
-                onChangeModeCallback={onChangeModeCallback}
+            <>
+              <Flex align={'center'} gap={40} justify={'space-between'}>
+                <SearchResultInfo search={search} totalResults={+data?.pageInfo?.totalResults} />
+                <SearchResultModeIcons
+                  isActive={isActive}
+                  onChangeModeCallback={onChangeModeCallback}
+                />
+              </Flex>
+              <VideosList videos={data.items} visibleMode={visibleMode} />
+              <CustomPagination
+                changeCurrentPage={onChangeCurrentPageCallback}
+                changePageSize={onChangePageSizeCallback}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                totalCount={+data.pageInfo.totalResults}
               />
-            </Flex>
-          )}
-          {!loadingStatus && <VideosList videos={data.items} visibleMode={visibleMode} />}
-          {!loadingStatus && (
-            <CustomPagination
-              changeCurrentPage={onChangeCurrentPageCallback}
-              changePageSize={onChangePageSizeCallback}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              totalCount={+data.pageInfo.totalResults}
-            />
+            </>
           )}
           {loadingStatus && <Preloader />}
         </>
