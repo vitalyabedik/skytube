@@ -4,7 +4,7 @@ export type ServerAppErrorType = {
   status: number
 }
 
-type MessageErrorType = {
+export type MessageErrorType = {
   message: string
 }
 
@@ -26,3 +26,5 @@ type ErrorResponseType = {
 export type ServerErrorType = {
   error: string
 }
+
+export type ErrorQueryResponseType = Pick<ServerAppErrorType, 'data'>
