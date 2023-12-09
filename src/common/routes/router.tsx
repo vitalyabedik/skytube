@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import React from 'react'
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Route, getValueFromLocalStorage, useAppDispatch, useAppSelector } from '@/common'
+import { Route } from '@/common'
 import { CustomHeader } from '@/components'
-import { authActions, selectIsAuth } from '@/features'
+import { useAuth } from '@/features'
 import { App } from 'antd'
 import Layout from 'antd/lib/layout'
 
@@ -12,19 +12,10 @@ import s from './AppLayout.module.scss'
 import { PrivateRoutes } from './PrivateRoutes'
 import { privateRoutes, publicRoutes } from './routerSettings'
 
-const AppLayout = () => {
+const AppLayout: React.FC = () => {
   const { Content, Header } = Layout
 
-  const dispatch = useAppDispatch()
-
-  const isAuth = useAppSelector(selectIsAuth)
-  const token = getValueFromLocalStorage('token')
-
-  useEffect(() => {
-    if (token && !isAuth) {
-      dispatch(authActions.setAuth({ isAuth: true }))
-    }
-  }, [token])
+  const { isAuth } = useAuth()
 
   return (
     <App>
