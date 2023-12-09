@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex } from 'antd'
+import Flex from 'antd/lib/flex'
 import Pagination, { PaginationProps } from 'antd/lib/pagination'
 import { clsx } from 'clsx'
 

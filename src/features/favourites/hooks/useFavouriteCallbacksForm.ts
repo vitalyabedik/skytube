@@ -7,8 +7,9 @@ import {
   useCreateFavouriteMutation,
   useUpdateFavouriteMutation,
 } from '@/features'
-import { FavouritesFormValues } from '@/features/favourites/ui/favouritesForm/useFavouritesForm'
 import { App } from 'antd'
+
+import { FavouritesFormValues } from '../ui/favouritesForm/useFavouritesForm'
 
 export const useFavouriteCallbacksForm = () => {
   const { message } = App.useApp()
