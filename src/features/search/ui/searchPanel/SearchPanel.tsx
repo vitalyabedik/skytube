@@ -4,8 +4,8 @@ import { useAppSelector } from '@/common'
 import { CustomModal } from '@/components'
 import { FavouritesForm, selectSearch } from '@/features'
 import { HeartOutlined } from '@ant-design/icons'
-import Input, { SearchProps } from 'antd/lib/input'
-import clsx from 'clsx'
+import { Input } from 'antd'
+import { SearchProps } from 'antd/lib/input'
 
 import s from './SearchPanel.module.scss'
 
@@ -29,12 +29,10 @@ export const SearchPanel: React.FC<Props> = memo(({ className, loadingStatus, on
     onChangeSearch(value)
   }
 
-  const searchClasses = clsx(s.input, className)
-
   return (
     <>
       <Search
-        className={searchClasses}
+        className={className}
         enterButton={'Найти'}
         loading={loadingStatus}
         onSearch={onSearchHandler}

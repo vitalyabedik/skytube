@@ -8,7 +8,7 @@ import {
   useFavouriteCallbacksForm,
   useFavouriteFormValues,
 } from '@/features'
-import Button from 'antd/lib/button'
+import { Button } from 'antd'
 import Flex from 'antd/lib/flex'
 import Input from 'antd/lib/input'
 import InputNumber from 'antd/lib/input-number'
