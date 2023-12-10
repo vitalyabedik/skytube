@@ -1,0 +1,12 @@
+@import '@/styles/mixins';
+
+.notFoundWrapper {
+  @include flex($direction: column, $align: center, $gap: 2rem, $justify: center);
+
+  text-align: center;
+}
+
+.descriptionWrapper {
+  width: 100%;
+  max-width: 55rem;
+}

@@ -18,9 +18,6 @@ export const useTheme = () => {
       Button: {
         borderRadius: data.Button?.borderRadius,
       },
-      Card: {
-        padding: 100,
-      },
       Input: {
         borderRadius: data.Button?.borderRadius,
       },
