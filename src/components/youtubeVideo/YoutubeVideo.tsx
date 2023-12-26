@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import ReactPlayer from 'react-player'
 
+import { GRID_HEIGHT, GRID_WIDTH, LIST_HEIGHT, LIST_WIDTH } from '@/common'
 import { clsx } from 'clsx'
 
 import s from './YoutubeVideo.module.scss'
@@ -12,8 +13,8 @@ type Props = {
 }
 
 export const YoutubeVideo: React.FC<Props> = memo(({ coverImage, isGrid, videoId }) => {
-  const height = isGrid ? '13.8rem' : '8.8rem'
-  const width = isGrid ? '24.5rem' : '15.7rem'
+  const height = isGrid ? GRID_HEIGHT : LIST_HEIGHT
+  const width = isGrid ? GRID_WIDTH : LIST_WIDTH
 
   const ImageClasses = clsx(isGrid ? s.imageGrid : s.imageList)
 
