@@ -19,12 +19,12 @@ type Props = {
 export const SearchResult: React.FC<Props> = memo(({ onChangeSearch }) => {
   const {
     currentPage,
+    currentPageSize,
     data,
     isLoading,
     loadingStatus,
     onChangeCurrentPageCallback,
     onChangePageSizeCallback,
-    pageSize,
     search,
   } = useSearchPagination()
 
@@ -58,7 +58,7 @@ export const SearchResult: React.FC<Props> = memo(({ onChangeSearch }) => {
                 changeCurrentPage={onChangeCurrentPageCallback}
                 changePageSize={onChangePageSizeCallback}
                 currentPage={currentPage}
-                pageSize={pageSize}
+                pageSize={currentPageSize as number}
                 totalCount={+data.pageInfo.totalResults}
               />
             </>

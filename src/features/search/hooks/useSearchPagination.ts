@@ -1,21 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/common'
-import { searchActions, selectSearch, selectSearchQuery, useGetVideosQuery } from '@/features'
+import {
+  searchActions,
+  selectCurrentPage,
+  selectSearch,
+  selectSearchQuery,
+  useGetVideosQuery,
+} from '@/features'
 
 export const useSearchPagination = () => {
   const dispatch = useAppDispatch()
 
   const search = useAppSelector(selectSearch)
+  const currentPage = useAppSelector(selectCurrentPage)
   const queryParams = useAppSelector(selectSearchQuery)
-
-  const [currentPage, setCurrentPage] = useState(1)
 
   const [prevPage, setPrevPage] = useState(0)
   const [pageSize, setPageSize] = useState(queryParams?.countResult ?? 8)
 
   const nextPageToken = currentPage > prevPage ? queryParams.nextPageToken : ''
   const prevPageToken = currentPage <= prevPage ? queryParams.prevPageToken : ''
+  const currentPageSize =
+    queryParams?.countResult !== pageSize ? queryParams?.countResult : pageSize
 
   const { data, isFetching, isLoading } = useGetVideosQuery({
     countResult: queryParams.countResult ?? 8,
@@ -37,9 +44,12 @@ export const useSearchPagination = () => {
         },
       })
     )
-
     if (queryParams?.countResult !== currentPageSize) {
-      setCurrentPage(1)
+      dispatch(
+        searchActions.setCurrentPage({
+          currentPage: 1,
+        })
+      )
       dispatch(
         searchActions.resetQuery({
           countResult: currentPageSize,
@@ -51,7 +61,11 @@ export const useSearchPagination = () => {
 
   const onChangeCurrentPageCallback = (newCurrentPage: number) => {
     setPrevPage(currentPage)
-    setCurrentPage(newCurrentPage)
+    dispatch(
+      searchActions.setCurrentPage({
+        currentPage: newCurrentPage,
+      })
+    )
     dispatch(
       searchActions.setQuery({
         query: {
@@ -64,16 +78,24 @@ export const useSearchPagination = () => {
     )
   }
 
+  useEffect(() => {
+    dispatch(
+      searchActions.setCurrentPage({
+        currentPage: 1,
+      })
+    )
+  }, [])
+
   const loadingStatus = isLoading || isFetching
 
   return {
     currentPage,
+    currentPageSize,
     data,
     isLoading,
     loadingStatus,
     onChangeCurrentPageCallback,
     onChangePageSizeCallback,
-    pageSize,
     prevPage,
     search,
   }

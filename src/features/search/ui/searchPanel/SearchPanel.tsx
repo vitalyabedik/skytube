@@ -1,8 +1,8 @@
 import React, { memo, useState } from 'react'
 
-import { useAppSelector } from '@/common'
+import { useAppDispatch, useAppSelector } from '@/common'
 import { CustomModal } from '@/components'
-import { FavouritesForm, selectSearch } from '@/features'
+import { FavouritesForm, searchActions, selectSearch, selectSearchQuery } from '@/features'
 import { HeartOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
 import { SearchProps } from 'antd/lib/input'
@@ -20,12 +20,24 @@ export const SearchPanel: React.FC<Props> = memo(({ className, loadingStatus, on
 
   const [open, setOpen] = useState(false)
   const search = useAppSelector(selectSearch)
+  const queryParams = useAppSelector(selectSearchQuery)
+
+  const dispatch = useAppDispatch()
 
   const onIconClickHandler = () => {
     setOpen(true)
   }
 
   const onSearchHandler: SearchProps['onSearch'] = (value, _e) => {
+    if (value !== search) {
+      dispatch(
+        searchActions.resetQuery({
+          countResult: 8,
+          sortBy: queryParams?.sortBy ?? 'relevance',
+        })
+      )
+    }
+    dispatch(searchActions.setCurrentPage({ currentPage: 1 }))
     onChangeSearch(value)
   }
 

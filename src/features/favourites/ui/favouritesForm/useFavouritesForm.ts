@@ -12,13 +12,13 @@ const addFavouritesSchema = z.object({
 
 export type FavouritesFormValues = z.infer<typeof addFavouritesSchema>
 
-export const useFavouritesForm = (defaultValues: FavouritesFormValues) =>
+export const useFavouritesForm = ({ maxCount, request, sortBy, title }: FavouritesFormValues) =>
   useForm<FavouritesFormValues>({
     defaultValues: {
-      maxCount: +defaultValues.maxCount,
-      request: defaultValues.request,
-      sortBy: defaultValues.sortBy,
-      title: defaultValues.title,
+      maxCount: +maxCount,
+      request,
+      sortBy,
+      title,
     },
     resolver: zodResolver(addFavouritesSchema),
   })

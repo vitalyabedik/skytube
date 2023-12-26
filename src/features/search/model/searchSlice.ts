@@ -2,6 +2,7 @@ import { GetQueryParamsType, sortByType } from '@/features'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  currentPage: 1,
   query: {
     countResult: 8,
     nextPageToken: '',
@@ -22,6 +23,9 @@ export const searchSlice = createSlice({
         prevPageToken: '',
         sortBy: action.payload.sortBy,
       }
+    },
+    setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
+      state.currentPage = action.payload.currentPage
     },
     setQuery: (state, action: PayloadAction<{ query: GetQueryParamsType }>) => {
       state.query = action.payload.query
